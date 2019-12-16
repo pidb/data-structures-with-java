@@ -66,13 +66,13 @@ public class Array<E> {
     }
 
     public E remove(int index) {
-        if (index < 0 || index >= size) {
+        if (index < 0 || index > size - 1) {
             throw new IllegalArgumentException("invalid index");
         }
 
         E returned = elements[index];
 
-        for (int i = index; i < size; i++) {
+        for (int i = index; i < size - 1; i++) {
             elements[i] = elements[i + 1];
         }
 
