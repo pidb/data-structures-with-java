@@ -65,10 +65,12 @@ public class Array<E> {
         add(size, e);
     }
 
-    public void remove(int index) {
+    public E remove(int index) {
         if (index < 0 || index >= size) {
             throw new IllegalArgumentException("invalid index");
         }
+
+        E returned = elements[index];
 
         for (int i = index; i < size; i++) {
             elements[i] = elements[i + 1];
@@ -82,14 +84,16 @@ public class Array<E> {
                 resize(capacity / 2);
             }
         }
+
+        return returned;
     }
 
-    public void removeFirst() {
-        remove(0);
+    public E removeFirst() {
+        return remove(0);
     }
 
-    public void removeLast() {
-        remove(size - 1);
+    public E removeLast() {
+        return remove(size - 1);
     }
 
     public E get(int index) {
