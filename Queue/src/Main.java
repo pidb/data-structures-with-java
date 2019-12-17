@@ -1,35 +1,39 @@
+import java.util.Random;
+import java.util.Scanner;
+
 public class Main {
+
+    public static double getQueueExecutedSecond(Queue<Integer> q, int opCount) {
+        Random random = new Random();
+        long start = System.nanoTime();
+        for (int i = 0; i < opCount; i++) {
+            q.enqueue(random.nextInt(opCount));
+        }
+
+        for (int i = 0; i < opCount; i++) {
+            q.dequeue();
+        }
+
+        System.out.println(q.toString());
+
+        long end = System.nanoTime();
+
+        return (end - start) / 1000000000.0;
+    }
+
     public static void main(String[] args) {
-//        Queue<Integer> arrayQueue = new ArrayQueue<>(5);
-//        System.out.println("enqueue:");
-//        for (int i = 0; i < 10; i++) {
-//            arrayQueue.enqueue(i + 1);
-//        }
-//        System.out.println(arrayQueue.toString());
-//        System.out.println("dequeue:");
-//        while (!arrayQueue.isEmpty())
-//            arrayQueue.dequeue();
-//        System.out.println(arrayQueue.toString());
-
-        Queue<Integer> circularQueue = new CircularQueue<>(4);
-        circularQueue.enqueue(1);
-        circularQueue.enqueue(2);
-        circularQueue.enqueue(3);
-        circularQueue.enqueue(4);
-        circularQueue.enqueue(5);
-        circularQueue.enqueue(6);
-        circularQueue.enqueue(7);
-        circularQueue.enqueue(8);
-        System.out.println(circularQueue.dequeue());
-        System.out.println(circularQueue.dequeue());
-        System.out.println(circularQueue.dequeue());
-        System.out.println(circularQueue.dequeue());
-        System.out.println(circularQueue.dequeue());
-        System.out.println(circularQueue.dequeue());
-        System.out.println(circularQueue.dequeue());
-        circularQueue.enqueue(9);
-        circularQueue.enqueue(10);
-        System.out.println(circularQueue.dequeue());
-
+        Queue<Integer> circularQueue = new CircularQueue<>(3);
+        Scanner in = new Scanner(System.in);
+        for (;;) {
+            String s = in.nextLine();
+            if (s.equals("dequeue")) {
+                System.out.println("dequeue: " + circularQueue.dequeue());
+                System.out.println(circularQueue.toString());
+            } else {
+                Integer element = Integer.parseInt(s);
+                circularQueue.enqueue(element);
+                System.out.println(circularQueue.toString());
+            }
+        }
     }
 }
