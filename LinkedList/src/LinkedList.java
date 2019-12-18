@@ -29,6 +29,14 @@ public class LinkedList<E> {
         this.dummyHead = new Node();
     }
 
+    public int getSize() {
+        return size;
+    }
+
+    public boolean isEmpty() {
+        return size == 0;
+    }
+
     public void add(E e, int index) {
         if (index < 0 || index > size) {
             throw new IllegalArgumentException("invalid index");
