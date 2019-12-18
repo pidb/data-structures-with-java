@@ -22,17 +22,17 @@ public class Main {
     }
 
     public static void main(String[] args) {
-        Queue<Integer> circularQueue = new CircularQueue<>(3);
+        Queue<Integer> queue = new LinkedListQueue<>();
         Scanner in = new Scanner(System.in);
         for (;;) {
             String s = in.nextLine();
             if (s.equals("dequeue")) {
-                System.out.println("dequeue: " + circularQueue.dequeue());
-                System.out.println(circularQueue.toString());
+                System.out.println("dequeue: " + queue.dequeue());
+                System.out.println(queue.toString());
             } else {
                 Integer element = Integer.parseInt(s);
-                circularQueue.enqueue(element);
-                System.out.println(circularQueue.toString());
+                queue.enqueue(element);
+                System.out.println(queue.toString());
             }
         }
     }

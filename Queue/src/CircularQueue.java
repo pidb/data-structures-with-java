@@ -86,7 +86,7 @@ public class CircularQueue <E> implements Queue<E> {
                 b.append(",");
             }
         }
-        b.append("]\n");
+        b.append("]");
 
         b.append("really storage [");
         for (int i = 0; i < capacity; i++) {
