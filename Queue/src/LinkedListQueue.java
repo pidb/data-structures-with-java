@@ -1,5 +1,5 @@
 public class LinkedListQueue<E> implements Queue<E> {
-    private class Node<E> {
+    private class Node<E>   {
         public E element;
 
         public Node<E> next;
@@ -25,7 +25,6 @@ public class LinkedListQueue<E> implements Queue<E> {
     private Node<E> head;
 
     private Node<E> tail;
-
 
     LinkedListQueue() {
         this.head = null;
