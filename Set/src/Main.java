@@ -1,6 +1,6 @@
 public class Main {
     public static void main(String[] args) {
-        Set<Integer> set = new LinkedListSet<Integer>();
+        Set<Integer> set = new BinarySearchSet<>();
         set.remove(1);
         set.add(1);
         set.add(2);
