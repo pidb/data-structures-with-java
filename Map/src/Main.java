@@ -1,6 +1,6 @@
 public class Main {
     public static void main(String[] args) {
-        Map<Integer, Integer> m = new LinkedListMap<>();
+        Map<Integer, Integer> m = new BinarySearchTreeMap<>();
         m.remove(1);
         System.out.println("contains key = 1: " + m.containsKey(1));
         System.out.println("contains value = 11: " + m.containsValue(11));
@@ -13,6 +13,9 @@ public class Main {
         System.out.println("contains value = 11: " + m.containsValue(11));
         System.out.println(m.toString());
         m.put(4, 444);
+        m.put(5, 444);
+        m.put(6, 444);
+        m.put(7, 444);
         System.out.println(m.toString());
     }
 }
