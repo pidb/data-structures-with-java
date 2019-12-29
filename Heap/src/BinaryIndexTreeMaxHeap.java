@@ -1,12 +1,12 @@
 public class BinaryIndexTreeMaxHeap<E extends Comparable<E>> implements MaxHeap<E> {
     private Array<E> data;
 
-    static private class Array<E> {
+    static private class Array<E extends Comparable<E>> {
         private E[] elements;
         private int size;
 
         Array(int cap) {
-            this.elements = (E[]) (new Object[cap]);
+            this.elements = (E[]) (new Comparable[cap]);
             this.size = 0;
         }
 
@@ -60,7 +60,7 @@ public class BinaryIndexTreeMaxHeap<E extends Comparable<E>> implements MaxHeap<
         }
 
         private void resize(int newCap) {
-            E[] newElements = (E[]) (new Object[newCap]);
+            E[] newElements = (E[]) (new Comparable[newCap]);
             for (int i = 0; i < size; i++) {
                 newElements[i] = elements[i];
             }
@@ -111,13 +111,14 @@ public class BinaryIndexTreeMaxHeap<E extends Comparable<E>> implements MaxHeap<
         data = new Array<>(elements.length);
         for (int i = 0; i < elements.length; i++) {
             data.elements[i] = elements[i];
+            data.size++;
         }
 
         heapify(data.size - 1);
     }
 
     private void heapify(int index) {
-        for (int i = parentIndex(index); i > 0; i--) {
+        for (int i = parentIndex(index); i >= 0; i--) {
             siftDown(i);
         }
     }

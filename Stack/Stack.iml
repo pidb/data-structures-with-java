@@ -7,7 +7,5 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="module" module-name="Array" />
-    <orderEntry type="module" module-name="LinkedList" />
   </component>
 </module>
