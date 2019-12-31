@@ -85,13 +85,6 @@ public class Main {
 
     public static void main(String[] args) {
         String filepath = "/home/xyc/workspace/code/java/play-with-data-structures/UF/src/largeUF.txt";
-//        UF quickFind = new QuickFind(readSize(filepath));
-//        double t1 = testUF(filepath, quickFind);
-//        System.out.println("QuickFind time: " + t1 + "s");
-//
-//        UF quickUnion = new QuickUnion(readSize(filepath));
-//        double t2 = testUF(filepath, quickUnion);
-//        System.out.println("QuickUnion time: " + t2 + "s");
 
         UF quickUnionSizeWeight = new QuickUnionSizeWeighted(readSize(filepath));
         double t3= testUF(filepath, quickUnionSizeWeight);
@@ -104,5 +97,9 @@ public class Main {
         UF quickUnionPathCompression = new QuickUnionPathCompression(readSize(filepath));
         double t5= testUF(filepath, quickUnionPathCompression);
         System.out.println("QuickUnionPathCompression time: " + t5 + "s");
+
+        UF quickUnionPathCompressionAll = new QuickUnionPathCompressionAll(readSize(filepath));
+        double t6= testUF(filepath, quickUnionPathCompressionAll);
+        System.out.println("QuickUnionPathCompressionAll time: " + t6 + "s");
     }
 }
