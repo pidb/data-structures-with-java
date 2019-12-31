@@ -89,12 +89,16 @@ public class Main {
 //        double t1 = testUF(filepath, quickFind);
 //        System.out.println("QuickFind time: " + t1 + "s");
 //
-        UF quickUnion = new QuickUnion(readSize(filepath));
-        double t2 = testUF(filepath, quickUnion);
-        System.out.println("QuickUnion time: " + t2 + "s");
+//        UF quickUnion = new QuickUnion(readSize(filepath));
+//        double t2 = testUF(filepath, quickUnion);
+//        System.out.println("QuickUnion time: " + t2 + "s");
 
         UF quickUnionSizeWeight = new QuickUnionSizeWeighted(readSize(filepath));
         double t3= testUF(filepath, quickUnionSizeWeight);
         System.out.println("QuickUnionSizeWeighted time: " + t3 + "s");
+
+        UF quickUnionRankWeighted = new QuickUnionRankWeighted(readSize(filepath));
+        double t4= testUF(filepath, quickUnionRankWeighted);
+        System.out.println("QuickUnionRankWeighted time: " + t4 + "s");
     }
 }

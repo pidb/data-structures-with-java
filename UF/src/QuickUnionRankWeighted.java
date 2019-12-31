@@ -3,6 +3,7 @@ public class QuickUnionRankWeighted implements UF {
     private int[] rank, parent;
 
     QuickUnionRankWeighted(int size) {
+        count = size;
         rank = new int[size];
         parent = new int[size];
         for (int i = 0; i < size; i++) {
@@ -13,13 +14,25 @@ public class QuickUnionRankWeighted implements UF {
 
     @Override
     public void union(int p, int q) {
+        int pRoot = find(p);
+        int qRoot = find(q);
+
+        if (rank[pRoot] < rank[qRoot]) {
+            parent[pRoot] = qRoot;
+        } else if (rank[qRoot] < rank[pRoot]) {
+            parent[qRoot] = pRoot;
+        } else {
+            parent[pRoot] = qRoot;
+            rank[qRoot] += 1;
+        }
 
         count--;
     }
 
     @Override
     public int find(int p) {
-        return 0;
+        while (p != parent[p]) p = parent[p];
+        return p;
     }
 
     @Override
