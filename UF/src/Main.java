@@ -100,5 +100,9 @@ public class Main {
         UF quickUnionRankWeighted = new QuickUnionRankWeighted(readSize(filepath));
         double t4= testUF(filepath, quickUnionRankWeighted);
         System.out.println("QuickUnionRankWeighted time: " + t4 + "s");
+
+        UF quickUnionPathCompression = new QuickUnionPathCompression(readSize(filepath));
+        double t5= testUF(filepath, quickUnionPathCompression);
+        System.out.println("QuickUnionPathCompression time: " + t5 + "s");
     }
 }
