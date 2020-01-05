@@ -14,19 +14,12 @@ public class AVLTree<K extends Comparable<K>, V> {
         }
 
         Node(K key, V value, Node<K, V> left, Node<K, V> right) {
-            this.key = key;
-            this.value = value;
-            this.left = left;
-            this.right = right;
-            this.height = 1;
+            this(key, value, left, right, 1);
+
         }
 
         Node(K key, V value) {
-            this.key = key;
-            this.value = value;
-            this.left = null;
-            this.right = null;
-            this.height = 1;
+            this(key, value, null, null, 1);
         }
     }
 
