@@ -84,7 +84,6 @@ public class AVLTree<K extends Comparable<K>, V> {
                 Node<K, V> rightNode = root.right;
                 root.right = null;
                 size--;
-
                 return rightNode;
             }
 
@@ -92,7 +91,6 @@ public class AVLTree<K extends Comparable<K>, V> {
                 Node<K, V> leftNode = root.left;
                 root.left = null;
                 size--;
-
                 return leftNode;
             }
 
