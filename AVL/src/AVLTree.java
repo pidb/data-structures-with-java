@@ -83,33 +83,39 @@ public class AVLTree<K extends Comparable<K>, V> {
         if (key.compareTo(root.key) < 0) {
             root.left = remove(root.left, key);
 
-        } else if(key.compareTo(root.key) > 0) {
+        } else if (key.compareTo(root.key) > 0) {
             root.right = remove(root.right, key);
 
         } else {
+            // 左-右子树都为空说明是叶子节点, 直接删除即可
+            if (root.left == null && root.right == null) {
+                root = null;
+                size--;
+                return null;
+            }
+
+            // 左子树为空 删除该节点, 调整右子树并返回
             if (root.left == null) {
                 Node<K, V> rightNode = root.right;
                 root.right = null;
                 size--;
-
-                return rightNode;
+                return rotate(rightNode);
             }
 
+            // 右子树为空 删除该节点, 调整左子树并返回
             if (root.right == null) {
                 Node<K, V> leftNode = root.left;
                 root.left = null;
                 size--;
-
-                return leftNode;
+                return rotate(leftNode);
             }
 
+            // 左-右子树都不为空, 使用hibbard deletion算法后旋转successor
             Node<K, V> successor = getMinNode(root.right);
             successor.right = remove(root.right, successor.key);
             successor.left = root.left;
             root.left = root.right = null;
-
-            successor = rotate(successor);
-            return successor;
+            return rotate(successor);
         }
 
         root = rotate(root);
