@@ -42,7 +42,8 @@ public class TwoThreeTree<K extends Comparable<K>, V> {
         if (node.left == null && node.right == null) {
             if (isTwoNode(node)) {
                 // 合并为3节点
-                return merge(node, key, value);
+                merge(node, key, value);
+                return node;
             }
 
             if (isThreeNode(node)) {
@@ -62,50 +63,69 @@ public class TwoThreeTree<K extends Comparable<K>, V> {
                     return node;
                 }
 
-                // 叶子节点分裂且root节点是一个2节点
-                if (isTwoNode(newRoot) && isTwoNode(node)) {
+                // 叶子节点分裂情况
+                if (isTwoNode(newRoot)) {
                     // node合并为2节点
-                    if (newRoot.leftKey.compareTo(node.leftKey) < 0) { // newRoot < node
-                        node.rightKey = node.leftKey;
-                        node.rightValue = node.leftValue;
-                        node.leftKey = newRoot.leftKey;
-                        node.leftValue = newRoot.leftValue;
+//                    if (newRoot.leftKey.compareTo(node.leftKey) < 0) { // newRoot < node
+//                        node.rightKey = node.leftKey;
+//                        node.rightValue = node.leftValue;
+//                        node.leftKey = newRoot.leftKey;
+//                        node.leftValue = newRoot.leftValue;
+//
+//                    } else if (newRoot.leftKey.compareTo(node.leftKey) > 0) { // newRoot > node
+//                        node.rightKey = newRoot.leftKey;
+//                        node.rightValue = newRoot.leftValue;
+//                    }
 
-                    } else if (newRoot.leftKey.compareTo(node.leftKey) > 0) { // newRoot > node
-                        node.rightKey = newRoot.leftKey;
-                        node.rightValue = newRoot.leftValue;
-                    }
-
-                    // 形成三叉树
+                    // 合并两个2节点为3节点
+                    merge(node, newRoot.leftKey, newRoot.leftValue);
                     node.left = new Node<K, V>(newRoot.left.leftKey, newRoot.left.leftValue);
                     node.middle = new Node<K, V>(newRoot.right.leftKey, newRoot.right.leftValue);
                     return node;
 
-                } else if (isTwoNode(newRoot) && isThreeNode(node)) { // 叶子节点分裂且root节点是一个3节点
-                    // 找出待分裂节点
-
-                    // node.left < newRoot < node.right
-                    if (newRoot.leftKey.compareTo(node.leftKey) > 0 && newRoot.leftKey.compareTo(node.rightKey) < 0) {
-                        Node<K, V> left = new Node<K, V>(node.leftKey, node.leftValue, null, null, node.left, null, node.middle);
-                        Node<K, V> right = new Node<K, V>(node.rightKey, node.rightValue, null, null, newRoot.left, null, newRoot.right);
-                        return new Node<K, V>(newRoot.leftKey, newRoot.leftValue, null, null, left, null, right);
-                    }
-
-                    // newRoot < node.left -> newRoot.left, node.left, node.right
-                    if (newRoot.leftKey.compareTo(node.leftKey) < 0) {
-                        Node<K, V> left = new Node<K, V>(newRoot.leftKey, newRoot.leftValue, null, null, node.left, null, node.middle);
-                        Node<K, V> right = new Node<K, V>(node.rightKey, node.rightValue, null, null, newRoot.left, null, newRoot.right);
-                        return new Node<K, V>(node.leftKey, node.leftValue, null, null, left, null, right);
-                    }
-
-                    // newRoot > node.right -> node.left, node.right, newRoot.left
-                    if (newRoot.leftKey.compareTo(node.rightKey) > 0) {
-                        Node<K, V> left = new Node<K, V>(node.leftKey, node.leftValue, null, null, node.left, null, node.middle);
-                        return new Node<K, V>(node.rightKey, node.rightValue, null, null, left, null, newRoot);
-                    }
                 }
-            } else if(key.compareTo(node.leftKey) > 0) {
 
+                // 叶子节点分裂同时root节点是一个3节点
+//                if (isTwoNode(newRoot) && isThreeNode(node)) {
+//                    // 找出待分裂节点
+//
+//                    // node.left < newRoot < node.right
+//                    if (newRoot.leftKey.compareTo(node.leftKey) > 0 && newRoot.leftKey.compareTo(node.rightKey) < 0) {
+//                        Node<K, V> left = new Node<K, V>(node.leftKey, node.leftValue, null, null, node.left, null, node.middle);
+//                        Node<K, V> right = new Node<K, V>(node.rightKey, node.rightValue, null, null, newRoot.left, null, newRoot.right);
+//                        return new Node<K, V>(newRoot.leftKey, newRoot.leftValue, null, null, left, null, right);
+//                    }
+//
+//                    // newRoot < node.left -> newRoot.left, node.left, node.right
+//                    if (newRoot.leftKey.compareTo(node.leftKey) < 0) {
+//                        Node<K, V> left = new Node<K, V>(newRoot.leftKey, newRoot.leftValue, null, null, node.left, null, node.middle);
+//                        Node<K, V> right = new Node<K, V>(node.rightKey, node.rightValue, null, null, newRoot.left, null, newRoot.right);
+//                        return new Node<K, V>(node.leftKey, node.leftValue, null, null, left, null, right);
+//                    }
+//
+//                    // newRoot > node.right -> node.left, node.right, newRoot.left
+//                    if (newRoot.leftKey.compareTo(node.rightKey) > 0) {
+//                        Node<K, V> left = new Node<K, V>(node.leftKey, node.leftValue, null, null, node.left, null, node.middle);
+//                        return new Node<K, V>(node.rightKey, node.rightValue, null, null, left, null, newRoot);
+//                    }
+//                }
+
+            } else if(key.compareTo(node.leftKey) > 0) {
+                Node<K, V> newRoot = add(node.right, key, value);
+                // 叶子节点合并
+                if (isThreeNode(newRoot)) {
+                    node.right = newRoot;
+                    return node;
+                }
+
+                // 叶子节点分裂
+                if (isTwoNode(newRoot)) {
+                    // 合并两个2节点为3节点
+                    merge(node, newRoot.leftKey, newRoot.leftValue);
+                    node.middle = new Node<K, V>(newRoot.left.leftKey, newRoot.left.leftValue);
+                    node.right = new Node<K, V>(newRoot.right.leftKey, newRoot.right.leftValue);
+                    return node;
+                }
             }
         }
 
@@ -173,7 +193,7 @@ public class TwoThreeTree<K extends Comparable<K>, V> {
         return node;
     }
 
-    private Node<K, V> merge(Node<K, V> node, K key, V value) {
+    private void merge(Node<K, V> node, K key, V value) {
         if (key.compareTo(node.leftKey) < 0) { // key < node.key1
             node.rightKey = node.leftKey;
             node.rightValue = node.leftValue;
