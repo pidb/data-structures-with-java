@@ -1,3 +1,6 @@
+import java.util.Map;
+import java.util.TreeMap;
+
 public class AVLTree<K extends Comparable<K>, V> {
     static private class Node<K extends Comparable<K>, V> {
         public int height;
@@ -189,6 +192,12 @@ public class AVLTree<K extends Comparable<K>, V> {
         }
 
         return isBalance(root.left) && isBalance(root.right);
+    }
+
+    private boolean isAVL() {
+        Map<Integer, Integer> rbm = new TreeMap<>();
+
+        return true;
     }
 
 }
