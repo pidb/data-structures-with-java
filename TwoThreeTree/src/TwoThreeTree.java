@@ -28,8 +28,27 @@ public class TwoThreeTree<K extends Comparable<K>, V> {
             this.right = right;
         }
 
-        Node(K key, V value) {
-            this(key, value, null, null, null, null, null);
+        /**
+         *       leftKey, null
+         *       /      |     \
+         *     left   null   right
+         * @param leftKey
+         * @param leftValue
+         * @param left
+         * @param right
+         */
+        Node(K leftKey, V leftValue, Node<K, V> left, Node<K, V> right) {
+            this(leftKey, leftValue, null, null, null, null, left, null, right);
+        }
+        /**
+         *      k:v
+         *    /    \
+         *  null  null
+         * @param leftKey
+         * @param leftValue
+         */
+        Node(K leftKey, V leftValue) {
+            this(leftKey, leftValue, null, null, null, null, null, null, null);
         }
 
     }
@@ -46,9 +65,9 @@ public class TwoThreeTree<K extends Comparable<K>, V> {
         root = add(root, key, value);
         // 分解根节点
         if (isFourNode(root)) {
-            Node<K, V> left = new Node<K, V>(root.leftKey, root.leftValue, null, null, null, null, root.left, null, root.middle);
-            Node<K, V> right = new Node<K, V>(root.rightKey, root.rightValue, null, null, null, null, root.middleRight, null, root.right);
-            root = new Node<K, V>(root.tmpKey, root.tmpValue, null, null, null, null, left, null, right);
+            Node<K, V> left = new Node<K, V>(root.leftKey, root.leftValue,  root.left, root.middle);
+            Node<K, V> right = new Node<K, V>(root.rightKey, root.rightValue, root.middleRight, root.right);
+            root = new Node<K, V>(root.tmpKey, root.tmpValue, left, right);
         }
     }
 
@@ -90,8 +109,8 @@ public class TwoThreeTree<K extends Comparable<K>, V> {
                     // 让4-node中键和2-node合并成为3-node
                     mergeToThreeNode(node, newRoot.tmpKey, newRoot.tmpValue);
                     // 调整3-node的子节点
-                    node.left = new Node<K, V>(newRoot.leftKey, newRoot.leftValue);
-                    node.middle = new Node<K, V>(newRoot.rightKey, newRoot.rightValue);
+                    node.left = new Node<K, V>(newRoot.leftKey, newRoot.leftValue, newRoot.left, newRoot.middle);
+                    node.middle = new Node<K, V>(newRoot.rightKey, newRoot.rightValue, newRoot.middleRight, newRoot.right);
                     return node;
                 }
 
@@ -100,9 +119,9 @@ public class TwoThreeTree<K extends Comparable<K>, V> {
                     // 让4-node中键和3-node合并成为4-node
                     mergeToFourNode(node, newRoot.tmpKey, newRoot.tmpValue);
                     // 调整4-node的子节点
-                    node.left = new Node<K, V>(newRoot.leftKey, newRoot.leftValue);
-                    node.middleRight = new Node<K, V>(node.middle.leftKey, node.middle.leftValue);
-                    node.middle = new Node<K, V>(newRoot.rightKey, newRoot.rightValue);
+                    node.left = new Node<K, V>(newRoot.leftKey, newRoot.leftValue, newRoot.left, newRoot.middle);
+                    node.middleRight = node.middle;
+                    node.middle = new Node<K, V>(newRoot.rightKey, newRoot.rightValue, newRoot.middleRight, newRoot.right);
                     return node;
                 }
             }
@@ -122,8 +141,8 @@ public class TwoThreeTree<K extends Comparable<K>, V> {
                     // 让4-node中键和2-node合并成为3-node
                     mergeToThreeNode(node, newRoot.tmpKey, newRoot.tmpValue);
                     // 调整3-node的子节点
-                    node.middle = new Node<K, V>(newRoot.leftKey, newRoot.leftValue);
-                    node.right = new Node<K, V>(newRoot.rightKey, newRoot.rightValue);
+                    node.middle = new Node<K, V>(newRoot.leftKey, newRoot.leftValue, newRoot.left, newRoot.middle);
+                    node.right = new Node<K, V>(newRoot.rightKey, newRoot.rightValue, newRoot.middleRight, newRoot.right);
                     return node;
                 }
 
@@ -132,8 +151,8 @@ public class TwoThreeTree<K extends Comparable<K>, V> {
                     // 让4-node中键和3-node合并成为4-node
                     mergeToFourNode(node, newRoot.tmpKey, newRoot.tmpValue);
                     // 调整4-node的子节点
-                    node.middleRight = new Node<K, V>(newRoot.leftKey, newRoot.leftValue);
-                    node.right = new Node<K, V>(newRoot.rightKey, newRoot.rightValue);
+                    node.middleRight = new Node<K, V>(newRoot.leftKey, newRoot.leftValue, newRoot.left, newRoot.middle);
+                    node.right = new Node<K, V>(newRoot.rightKey, newRoot.rightValue, newRoot.middleRight, newRoot.right);
                     return node;
                 }
             }
@@ -155,8 +174,10 @@ public class TwoThreeTree<K extends Comparable<K>, V> {
                 }
 
                 if (isFourNode(newRoot) && isThreeNode(node)) {
-                    node.middle = new Node<K, V>(newRoot.leftKey, newRoot.leftValue);
-                    node.middleRight = new Node<K, V>(newRoot.rightKey, newRoot.rightValue);
+                    // 让4-node中键和3-node合并成为4-node
+                    mergeToFourNode(node, newRoot.tmpKey, newRoot.tmpValue);
+                    node.middle = new Node<K, V>(newRoot.leftKey, newRoot.leftValue, newRoot.left, newRoot.middle);
+                    node.middleRight = new Node<K, V>(newRoot.rightKey, newRoot.rightValue, newRoot.middleRight, newRoot.right);
                     return node;
                 }
             }
@@ -181,9 +202,9 @@ public class TwoThreeTree<K extends Comparable<K>, V> {
                     // 让4-node中键和3-node合并成为4-node
                     mergeToFourNode(node, newRoot.tmpKey, newRoot.tmpValue);
                     // 调整4-node的子节点
-                    node.left = new Node<K, V>(newRoot.leftKey, newRoot.leftValue);
-                    node.middleRight = new Node<K, V>(node.middle.leftKey, node.middle.leftValue);
-                    node.middle = new Node<K, V>(newRoot.rightKey, newRoot.rightValue);
+                    node.left = new Node<K, V>(newRoot.leftKey, newRoot.leftValue, newRoot.left, newRoot.middle);
+                    node.middleRight = node.middle;
+                    node.middle = new Node<K, V>(newRoot.rightKey, newRoot.rightValue, newRoot.middleRight, newRoot.right);
                     return node;
                 }
             }
@@ -207,14 +228,12 @@ public class TwoThreeTree<K extends Comparable<K>, V> {
                     // 让4-node中键和3-node合并成为4-node
                     mergeToFourNode(node, newRoot.tmpKey, newRoot.tmpValue);
                     // 调整4-node的子节点
-                    node.middleRight = new Node<K, V>(newRoot.leftKey, newRoot.leftValue);
-                    node.right = new Node<K, V>(newRoot.rightKey, newRoot.rightValue);
+                    node.middleRight = new Node<K, V>(newRoot.leftKey, newRoot.leftValue,newRoot.left, newRoot.middle);
+                    node.right = new Node<K, V>(newRoot.rightKey, newRoot.rightValue, newRoot.middleRight, newRoot.right);
                     return node;
                 }
             }
         }
-
-
 
         return node;
     }

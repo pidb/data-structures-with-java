@@ -10,34 +10,18 @@ public class Main {
         twoThreeTree.add(8, 1);
         twoThreeTree.add(25, 1);
         twoThreeTree.add(40, 1);
-        twoThreeTree.add(70, 1);
+        twoThreeTree.add(28, 1);
+        twoThreeTree.add(66, 1);
+        twoThreeTree.add(32, 1);
+        twoThreeTree.add(51, 1);
+        twoThreeTree.add(17, 1);
+        twoThreeTree.add(23, 1);
+        twoThreeTree.add(13, 1);
+        twoThreeTree.add(24, 1);
+        twoThreeTree.add(49, 1);
+        twoThreeTree.add(57, 1);
+        twoThreeTree.add(58, 1);
+        twoThreeTree.add(59, 1);
         twoThreeTree.add(60, 1);
-        /*
-        *        insert 18:  18
-        *        insert 20:  18, 20
-        *        insert 10:  10, 18, 20 ->   18
-        *                                  10  20
-        *
-        *        insert 15:                  15,18
-        *                                  10     20
-        *
-        *        insert 6:                   15, 18
-        *                                 6,10     20
-        *
-        *        insert 7:                   15, 18      ->    15, 18     ->  7, 15, 18     ->      15
-        *                                6,7,10    20         7      20      6  10      20       7      18
-        *                                                   6   10                             6   10      20
-        *
-        *
-        *           10,18,20 ->
-        *
-        *                10
-        *         6,15,18  20  ->
-        *
-        *           10            10, 15
-        *         15   20   ->   6   18  20
-        *        6  18
-        *
-        * */
     }
 }
