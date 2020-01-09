@@ -18,10 +18,5 @@ public class Main {
         twoThreeTree.add(23, 1);
         twoThreeTree.add(13, 1);
         twoThreeTree.add(24, 1);
-        twoThreeTree.add(49, 1);
-        twoThreeTree.add(57, 1);
-        twoThreeTree.add(58, 1);
-        twoThreeTree.add(59, 1);
-        twoThreeTree.add(60, 1);
     }
 }
